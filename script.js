@@ -4,10 +4,10 @@ console.log("JS CONNECTED");
 // API KEYS
 // =====================================
 const HF_TOKEN =
-  CONFIG.HF_TOKEN;
+  "YOUR_HF_TOKEN";
 
 const NEWS_API_KEY =
-  CONFIG.NEWS_API_KEY;
+  "YOUR_GNEWS_KEY";
 
 // =====================================
 // DOM ELEMENTS
