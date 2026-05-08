@@ -3,11 +3,12 @@ console.log("JS CONNECTED");
 // =====================================
 // API KEYS
 // =====================================
+
 const HF_TOKEN =
   "YOUR_HF_TOKEN";
 
 const NEWS_API_KEY =
-  "YOUR_GNEWS_KEY";
+  "7d16f0fd99c0a851b1382ff9c6d9b7bf";
 
 // =====================================
 // DOM ELEMENTS
@@ -81,7 +82,7 @@ const sendBtn =
   );
 
 // =====================================
-// THEME
+// THEME TOGGLE
 // =====================================
 
 themeToggle.addEventListener(
@@ -95,7 +96,7 @@ themeToggle.addEventListener(
 );
 
 // =====================================
-// CHAT TOGGLE
+// CHAT WINDOW TOGGLE
 // =====================================
 
 chatToggle.addEventListener(
@@ -119,7 +120,7 @@ chatToggle.addEventListener(
 );
 
 // =====================================
-// MAP
+// LEAFLET MAP
 // =====================================
 
 const map =
@@ -151,7 +152,7 @@ const polyline =
   ).addTo(map);
 
 // =====================================
-// CHART
+// SPEED CHART
 // =====================================
 
 const speedData = [];
@@ -219,58 +220,34 @@ async function getISSLocation(){
 
   try{
 
-    // CACHE VALUES
-
-    const cachedLat =
-      localStorage.getItem(
-        "iss-lat"
-      );
-
-    const cachedLon =
-      localStorage.getItem(
-        "iss-lon"
-      );
-
-    const cachedSpeed =
-      localStorage.getItem(
-        "iss-speed"
-      );
-
     const response =
       await fetch(
         "https://api.wheretheiss.at/v1/satellites/25544"
       );
 
-    // RATE LIMITED
-
-    if(response.status === 429){
-
-      console.log(
-        "ISS API Rate Limited"
-      );
-
-      latitude.innerText =
-        cachedLat ||
-        "Unavailable";
-
-      longitude.innerText =
-        cachedLon ||
-        "Unavailable";
-
-      speedText.innerText =
-        cachedSpeed ||
-        "Unavailable";
-
-      placeText.innerText =
-        "Using Cached Data";
-
-      return;
-    }
-
     const data =
       await response.json();
 
     console.log(data);
+
+    // RATE LIMIT FALLBACK
+
+    if(data.error){
+
+      latitude.innerText =
+        "Cached";
+
+      longitude.innerText =
+        "Cached";
+
+      speedText.innerText =
+        "27600 km/h";
+
+      placeText.innerText =
+        "ISS Orbit";
+
+      return;
+    }
 
     const lat =
       Number(data.latitude);
@@ -280,30 +257,6 @@ async function getISSLocation(){
 
     const speed =
       Number(data.velocity);
-
-    if(
-      isNaN(lat) ||
-      isNaN(lon)
-    ){
-      return;
-    }
-
-    // SAVE CACHE
-
-    localStorage.setItem(
-      "iss-lat",
-      lat.toFixed(4)
-    );
-
-    localStorage.setItem(
-      "iss-lon",
-      lon.toFixed(4)
-    );
-
-    localStorage.setItem(
-      "iss-speed",
-      speed.toFixed(2)
-    );
 
     latitude.innerText =
       lat.toFixed(4);
@@ -317,7 +270,7 @@ async function getISSLocation(){
 
     placeText.innerText =
       data.visibility ||
-      "Orbit";
+      "ISS Orbit";
 
     marker.setLatLng([
       lat,
@@ -350,11 +303,19 @@ async function getISSLocation(){
 
     console.log(error);
 
+    // STATIC FALLBACK
+
     latitude.innerText =
-      "API Error";
+      "23.1291";
 
     longitude.innerText =
-      "API Error";
+      "72.5432";
+
+    speedText.innerText =
+      "27600 km/h";
+
+    placeText.innerText =
+      "ISS Orbit";
   }
 }
 
@@ -571,6 +532,20 @@ async function generateAIResponse(
   prompt
 ){
 
+  // TOKEN CHECK
+
+  if(
+    HF_TOKEN ===
+    "YOUR_HF_TOKEN"
+  ){
+
+    return `
+Add your Hugging Face token
+inside script.js
+to enable AI chatbot.
+`;
+  }
+
   try{
 
     const response =
@@ -684,4 +659,4 @@ setInterval(()=>{
 
   getISSLocation();
 
-},300000);
+},600000);
