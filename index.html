@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>
+    ISS Dashboard
+  </title>
+
+  <!-- LEAFLET -->
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <!-- CSS -->
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  />
+
+</head>
+
+<body>
+
+  <!-- THEME BUTTON -->
+
+  <button id="themeToggle">
+    🌙 Toggle Theme
+  </button>
+
+  <!-- TITLE -->
+
+  <h1>
+    🚀 Real-Time ISS Dashboard
+  </h1>
+
+  <!-- MAIN -->
+
+  <div class="container">
+
+    <!-- ISS -->
+
+    <div class="card">
+
+      <h2>
+        🛰 ISS Live Tracking
+      </h2>
+
+      <div class="info">
+
+        <p>
+          <b>Latitude:</b>
+          <span id="lat">
+            Loading...
+          </span>
+        </p>
+
+        <p>
+          <b>Longitude:</b>
+          <span id="lon">
+            Loading...
+          </span>
+        </p>
+
+        <p>
+          <b>Speed:</b>
+          <span id="speed">
+            Loading...
+          </span>
+        </p>
+
+        <p>
+          <b>Visibility:</b>
+          <span id="place">
+            Loading...
+          </span>
+        </p>
+
+      </div>
+
+      <br>
+
+      <div id="map"></div>
+
+    </div>
+
+    <!-- NEWS -->
+
+    <div class="card">
+
+      <h2>
+        📰 Space News
+      </h2>
+
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search News..."
+      />
+
+      <br><br>
+
+      <select id="sortSelect">
+
+        <option value="date">
+          Sort By Date
+        </option>
+
+      </select>
+
+      <br><br>
+
+      <div id="newsContainer">
+
+      </div>
+
+    </div>
+
+    <!-- ASTRONAUTS -->
+
+    <div class="card">
+
+      <h2>
+        👨‍🚀 Astronauts
+      </h2>
+
+      <p>
+        Total:
+        <span id="astronautCount">
+          0
+        </span>
+      </p>
+
+      <br>
+
+      <ul id="astronautList">
+
+      </ul>
+
+    </div>
+
+    <!-- CHART -->
+
+    <div class="card">
+
+      <h2>
+        📈 ISS Speed Chart
+      </h2>
+
+      <canvas id="speedChart">
+
+      </canvas>
+
+    </div>
+
+  </div>
+
+  <!-- CHAT BUTTON -->
+
+  <button id="chatToggle">
+    💬
+  </button>
+
+  <!-- CHAT WINDOW -->
+
+  <div id="chatWindow">
+
+    <div class="chat-header">
+
+      <h3>
+        AI Chatbot
+      </h3>
+
+    </div>
+
+    <div id="messages">
+
+    </div>
+
+    <div class="input-box">
+
+      <input
+        type="text"
+        id="userInput"
+        placeholder="Ask AI..."
+      />
+
+      <button id="sendBtn">
+        Send
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- LEAFLET -->
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- CHART -->
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- JS -->
+   <script src="config.js"></script>
+
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>
