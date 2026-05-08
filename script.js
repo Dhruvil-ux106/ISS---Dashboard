@@ -312,7 +312,7 @@ async function getNews(){
 
     const response =
       await fetch(
-        `https://gnews.io/api/v4/search?q=space&lang=en&max=10&apikey=${NEWS_API_KEY}`
+        `https://corsproxy.io/?https://gnews.io/api/v4/search?q=space&lang=en&max=10&apikey=${NEWS_API_KEY}`
       );
 
     const data =
