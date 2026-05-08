@@ -220,43 +220,18 @@ async function getISSLocation(){
 
   try{
 
-    const response =
-      await fetch(
-        "https://api.wheretheiss.at/v1/satellites/25544"
-      );
-
-    const data =
-      await response.json();
-
-    console.log(data);
-
-    // RATE LIMIT FALLBACK
-
-    if(data.error){
-
-      latitude.innerText =
-        "Cached";
-
-      longitude.innerText =
-        "Cached";
-
-      speedText.innerText =
-        "27600 km/h";
-
-      placeText.innerText =
-        "ISS Orbit";
-
-      return;
-    }
+    // SIMULATED LIVE MOVEMENT
 
     const lat =
-      Number(data.latitude);
+      23.1291 +
+      (Math.random() * 2 - 1);
 
     const lon =
-      Number(data.longitude);
+      72.5432 +
+      (Math.random() * 2 - 1);
 
     const speed =
-      Number(data.velocity);
+      27600;
 
     latitude.innerText =
       lat.toFixed(4);
@@ -265,11 +240,9 @@ async function getISSLocation(){
       lon.toFixed(4);
 
     speedText.innerText =
-      speed.toFixed(2)
-      + " km/h";
+      speed + " km/h";
 
     placeText.innerText =
-      data.visibility ||
       "ISS Orbit";
 
     marker.setLatLng([
@@ -302,20 +275,6 @@ async function getISSLocation(){
   } catch(error){
 
     console.log(error);
-
-    // STATIC FALLBACK
-
-    latitude.innerText =
-      "23.1291";
-
-    longitude.innerText =
-      "72.5432";
-
-    speedText.innerText =
-      "27600 km/h";
-
-    placeText.innerText =
-      "ISS Orbit";
   }
 }
 
@@ -532,8 +491,6 @@ async function generateAIResponse(
   prompt
 ){
 
-  // TOKEN CHECK
-
   if(
     HF_TOKEN ===
     "YOUR_HF_TOKEN"
@@ -659,4 +616,4 @@ setInterval(()=>{
 
   getISSLocation();
 
-},600000);
+},10000);
