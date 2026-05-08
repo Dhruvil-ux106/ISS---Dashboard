@@ -1,14 +1,11 @@
 console.log("JS CONNECTED");
 
 // =====================================
-// API KEYS
+// HUGGING FACE TOKEN
 // =====================================
 
 const HF_TOKEN =
   "YOUR_HF_TOKEN";
-
-const NEWS_API_KEY =
-  "7d16f0fd99c0a851b1382ff9c6d9b7bf";
 
 // =====================================
 // DOM ELEMENTS
@@ -312,7 +309,7 @@ async function getNews(){
 
     const response =
       await fetch(
-        `https://corsproxy.io/?https://gnews.io/api/v4/search?q=space&lang=en&max=10&apikey=${NEWS_API_KEY}`
+        "https://api.spaceflightnewsapi.net/v4/articles/?limit=10"
       );
 
     const data =
@@ -321,7 +318,7 @@ async function getNews(){
     console.log(data);
 
     allNews =
-      data.articles || [];
+      data.results || [];
 
     displayNews(allNews);
 
@@ -352,7 +349,7 @@ function displayNews(news){
     card.innerHTML =
       `
       <img
-        src="${article.image}"
+        src="${article.image_url}"
         class="news-img"
       >
 
@@ -363,7 +360,9 @@ function displayNews(news){
       <br>
 
       <p>
-        ${article.description || ""}
+        ${
+          article.summary || ""
+        }
       </p>
 
       <br>
@@ -418,13 +417,13 @@ sortSelect.addEventListener(
       (a,b)=>
 
       new Date(
-        b.publishedAt
+        b.published_at
       )
 
       -
 
       new Date(
-        a.publishedAt
+        a.published_at
       )
     );
 
